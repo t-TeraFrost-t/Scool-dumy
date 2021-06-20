@@ -1,0 +1,48 @@
+﻿@model School_D.Models.Subject
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Subject</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+   
+        @{
+            List<Student> listSubject = new List<Student>();
+            foreach (StudentSubject item in Model.StudentSubject)
+            {
+                listSubject.Add(item.IdStudentNavigation);
+            }
+
+            foreach (Student item in listSubject)
+            {
+
+                <p> - @item.Name @item.Surname<a asp-action="DeleteStudent" asp-route-id="@Model.StudentSubject.FirstOrDefault(s => s.IdStudent == item.IdStudent).Id" onclick='return confirm("Are you shure you want to remove this student?")'>X</a></p>
+
+            }
+            @using (Html.BeginForm("AddStudent", "Subjects", FormMethod.Post))
+            {
+                <input type="hidden" name="IdSubject" id="IdSubject" value="@Model.IdSubject">
+                <select name="IdStudent" id="IdStudent" asp-items='ViewBag.Students' class="form-control"><</select>
+                <input type="submit" value="Add" class="btn btn-default" />
+            }
+
+        }
+    
+
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdSubject">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,80 @@
+﻿@model School_D.Models.Student
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<h4>Students</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdStudent" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdClass" class="control-label"></label>
+                <select asp-for="IdClass" class="form-control" asp-items="ViewBag.Classes"></select>
+                <span asp-validation-for="IdClass" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" onclick="return isValidated()" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script src="/js/ValidatationStudent.js" language="javascript" type="text/javascript"></script>
+@*<script>
+    function isName(str) {
+        var ex = /([A-Z])([a-z]){1,15}/;
+        return ex.test(str);
+    }
+    function isNumber(str) {
+        var ex = /\d+/;
+        return ex.test(str);
+    }
+    function isValidated() {
+        var name = document.getElementById("Name").value;
+        var surname = document.getElementById("Surname").value;
+        var age = document.getElementById("Age").value;
+        var idschool = document.getElementById("IdSchool").value;
+
+        var mesageError = "";
+
+        if (!isName(name)) mesageError += "Name should start with a capital letter wich is followed by not capital leters wich shoud be under 15 of number\n"
+        if (!isName(surname)) mesageError += "Surname should start with a capital letter wich is followed by not capital leters wich shoud be under 15 of number\n"
+        if (isNumber(age) && (age <= 0 || age > 20)) mesageError += "Age shoud be a number between 1 - 20\n"
+        if (idschool.lengt <= 0) mesageError += "School must be entered"
+        if (mesageError.length > 0) {
+
+            alert(mesageError);
+            return false;
+        }
+    }
+
+   
+</script>*@
+@section Scripts {
+   
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

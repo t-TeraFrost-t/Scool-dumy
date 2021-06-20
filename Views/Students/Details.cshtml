@@ -1,0 +1,65 @@
+﻿@model School_D.Models.Student
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Students</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Surname)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Age)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Age)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.IdClassNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IdClassNavigation.Letter)
+        </dd>
+    </dl>
+    <div class="form-group">
+        @{
+            List<Subject> listSubject = new List<Subject>();
+            foreach (StudentSubject item in Model.StudentSubject)
+            {
+                listSubject.Add(item.IdSubjectNavigation);
+            }
+
+            foreach (Subject item in listSubject)
+            {
+                
+                <p> - @item.Name <a asp-action="DeleteSubject" asp-route-id="@Model.StudentSubject.FirstOrDefault(s => s.IdSubject == item.IdSubject).Id" onclick='return confirm("Are you shure you want to remove this subject?")'>X</a></p>
+                
+            }
+            @using (Html.BeginForm("AddSubject", "Students", FormMethod.Post))
+            {
+                <input type="hidden" name="IdStudent" id="IdStudent" value="@Model.IdStudent">
+                <select name="IdSubject" id="IdSubject" asp-items='ViewBag.Subjects' class="form-control"><</select>
+                <input type="submit" value="Add" class="btn btn-default" />
+            }
+
+        }
+    </div>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.IdStudent">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
